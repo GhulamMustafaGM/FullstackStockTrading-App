@@ -18,7 +18,7 @@ cursor = connection.cursor()
 # for row in rows:
 #     print(row['company'])
 
-api = tradeapi.REST('PK89LCST819PTZPYO116', 'w1j56sCtNqNjzN1ADPqis7PLGwR7Z1ZSEC8KFD97', base_url='https://paper-api.alpaca.markets') # or use ENV Vars shown below
+api = tradeapi.REST('API Key ID', 'Secret Key', base_url='https://paper-api.alpaca.markets') # or use ENV Vars shown below
 assets = api.list_assets()
 
 for asset in assets:
