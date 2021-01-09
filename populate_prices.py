@@ -8,13 +8,14 @@ connection.row_factory = sqlite3.Row
 cursor = connection.cursor()
 
 cursor.execute("""
-    SELECT id, symbol, name FROM stock
+    SELECT id, symbol, name FROM stock 
 """)
 
 rows = cursor.fetchall()
 
-symbols = [row['symbol'] for row in rows]
+# symbols = [row['symbol'] for row in rows]
 # print(symbols)
+symbols = []
 stock_dict = {}
 for row in rows:
     symbol = row['symbol']
