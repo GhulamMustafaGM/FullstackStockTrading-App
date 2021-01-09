@@ -30,7 +30,7 @@ for asset in assets:
     try:
         if asset.status == 'active' and asset.tradable and asset.symbol not in symbols:
             print(f"Added a new stock {asset.symbol} {asset.name}")
-            cursor.execute("INSERT INTO stock (symbol, company) VALUES (?, ?)", (asset.symbol, asset.name))
+            cursor.execute("INSERT INTO stock (symbol, name) VALUES (?, ?)", (asset.symbol, asset.name))
     except Exception as e:
         print(asset.symbol)
         print(e)
