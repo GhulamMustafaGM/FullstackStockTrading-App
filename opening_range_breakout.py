@@ -1,6 +1,9 @@
 import sqlite3, config 
 import alpaca_trade_api as tradeapi
+import smtplib, ssl
 from datetime import date
+
+context = ssl.create_default_context()
 
 connection = sqlite3.connect(config.DB_FILE)
 connection.row_factory = sqlite3.Row
@@ -23,15 +26,16 @@ cursor.execute("""
 stocks = cursor.fetchall()
 symbols = [stock['symbol'] for stock in stocks]
 
-api = tradeapi.REST(config.API_KEY, config.SECRET_KEY, base_url=config.API_URL)
-
-orders = api.list_orders()
-existing_order_symbols = [order.symbol for order in orders]
-
 current_date = '2021-01-11'
 # current_date = date.today().isoformat()
 start_minute_bar = f"{current_date} 09:15:00-05:00"
 end_minute_bar = f"{current_date} 09:30:00-05:00"
+
+api = tradeapi.REST(config.API_KEY, config.SECRET_KEY, base_url=config.API_URL)
+
+orders = api.list_orders(status='all', limit=500, after=f"{current_date}T13:40:00Z")
+existing_order_symbols = [order.symbol for order in orders]
+print(existing_order_symbols)
 
 for symbol in symbols:
     minute_bars = api.polygon.historic_agg_v2(symbol, 1, 'minute', _from=current_date, to=current_date).df
