@@ -1,5 +1,7 @@
 import sqlite3, config 
 import alpaca_trade_api as tradeapi
+# import tulipy, numpy
+from datetime import date
 
 connection = sqlite3.connect(config.DB_FILE)
 
@@ -40,14 +42,24 @@ for symbol in barsets:
     print(barsets[symbol])
     
     recent_closes = [bar.c for bar in barsets[symbol]]
-    print(len(recent_closes))
-    
+    # print(len(recent_closes))
     for bar in barsets[symbol]:
         stock_id = stock_dict[symbol]
-        # cursor.execute("""
-        #     INSERT INTO stock_price (stock_id, date, open, high, low, close, volume, sma_20, sma_50, sma_14)
-        #     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        # """, (stock_id, bar.t.date(), bar.o, bar.h, bar.l, bar.c, bar.v,sma_20, sma_50, sma_14))
+        
+        print(date.today().isoformat())
+        print(bar.t.date())
+        
+        if len(recent_closes) >=50 and date.today().isoformat() == bar.t.date():
+            sma_20 = tulipy.sma(numpy.array(recent_closes), period=20)[-1]
+            sma_50 = tulipy.sma(numpy.array(recent_closes), period=50)[-1]
+            rsi_14 = tulipy.rsi(numpy.array(recent_closes), period=14)[-1] 
+        else:
+            sma_20. sma_50, rsi_14 = None, None, None
+
+        cursor.execute("""
+            INSERT INTO stock_price (stock_id, date, open, high, low, close, volume, sma_20, sma_50, sma_14)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (stock_id, bar.t.date(), bar.o, bar.h, bar.l, bar.c, bar.v,sma_20, sma_50, sma_14))
 
 # barsets = api.get_barset(['AAPL', 'MSFT'], 'day')
 # barsets = api.get_barset(['Z'], 'minute')
