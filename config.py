@@ -1,6 +1,6 @@
 API_URL = 'https://paper-api.alpaca.markets'
-API_KEY = 'PKMMKYMX7RYKXTPFFR0W'
-SECRET_KEY = 'OcwUfOGkSwEEEsVZqXONH9aINDbd7KEtHXs1KRdF'
+API_KEY = 'PKZ8YZ0K14TXZOTJ0NZ9'
+SECRET_KEY = 'RKTEzISzMvfddBwDXwEFItTfC0J5qPR13VhfjzZ7'
 
 DB_FILE = '/Users\ghula\FullstackStockTrading-App/app.db'
 

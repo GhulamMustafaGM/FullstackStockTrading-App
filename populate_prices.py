@@ -24,6 +24,8 @@ for row in rows:
 
 api = tradeapi.REST(config.API_KEY, config.SECRET_KEY, base_url=config.API_URL)
 
+symbols = ['MSFT']
+
 chunk_size = 200
 for i in range(0, len(symbols), chunk_size):
     # print(i)
@@ -34,12 +36,18 @@ for i in range(0, len(symbols), chunk_size):
 
 for symbol in barsets:
     print(f"processing symbol {symbol}")
+
+    print(barsets[symbol])
+    
+    recent_closes = [bar.c for bar in barsets[symbol]]
+    print(len(recent_closes))
+    
     for bar in barsets[symbol]:
         stock_id = stock_dict[symbol]
-        cursor.execute("""
-            INSERT INTO stock_price (stock_id, date, open, high, low, close, volume)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        """, (stock_id, bar.t.date(), bar.o, bar.h, bar.l, bar.c, bar.v))
+        # cursor.execute("""
+        #     INSERT INTO stock_price (stock_id, date, open, high, low, close, volume, sma_20, sma_50, sma_14)
+        #     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        # """, (stock_id, bar.t.date(), bar.o, bar.h, bar.l, bar.c, bar.v,sma_20, sma_50, sma_14))
 
 # barsets = api.get_barset(['AAPL', 'MSFT'], 'day')
 # barsets = api.get_barset(['Z'], 'minute')

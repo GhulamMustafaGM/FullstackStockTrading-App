@@ -14,7 +14,7 @@ cursor.execute("""
 """)
 
 cursor.execute(""" 
-    CREATE TABLE stock_price (
+    CREATE TABLE IF NOT EXISTS stock_price (
         id INTEGER PRIMARY KEY,
         stock_id INTEGER,
         date NOT NULL,
@@ -23,6 +23,9 @@ cursor.execute("""
         low NOT NULL,
         close NOT NULL,
         volume NOT NULL,
+        sma_20,
+        sma_50,
+        rsi_14,
         FOREIGN KEY (stock_id) REFERENCES stock(id)
     )  
 """)
