@@ -2,6 +2,7 @@ import sqlite3, config
 from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
+import tulipy, numpy
 from datetime import date
 
 app = FastAPI()
