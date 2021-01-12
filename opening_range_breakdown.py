@@ -12,7 +12,7 @@ connection.row_factory = sqlite3.Row
 cursor = connection.cursor()
 
 cursor.execute(""" 
-    select id from strategy where name = 'opening_range_breakout'
+    select id from strategy where name = 'opening_range_breakdown'
 """)
 
 strategy_id = cursor.fetchone()['id']
@@ -64,19 +64,20 @@ for symbol in symbols:
     
     print(after_opening_range_bars)
     
-    after_opening_range_breakout = after_opening_range_bars[after_opening_range_bars['close'] > opening_range_high]
+    after_opening_range_breakdown = after_opening_range_bars[after_opening_range_bars['close'] < opening_range_ligh]
     
-    if not after_opening_range_breakout.empty:
+    if not after_opening_range_breakdown.empty:
         if symbol not in existing_order_symbols:
-        print(after_opening_range_breakout)
-        limit_price = after_opening_range_breakout.iloc[0]['close']
+        print(after_opening_range_breakdown)
+        limit_price = after_opening_range_breakdown.iloc[0]['close']
         # print(limit_price)
         
-        messages.append(f"placing order for {symbol} at {limit_price}, closed_above {opening_range_high}\n\n{after_opening_range_breakout.iloc[0]}\n\n")
-        print(f"placing order for {symbol} at {limit_price}, closed_above {opening_range_high} at {after_opening_range_breakout.iloc[0]}")
+        message = f"selling short for {symbol} at {limit_price}, closed_below{opening_range_low}\n\n{after_opening_range_breakdown.iloc[0]}\n\n"
+        messages.append(message)
+        print(message)
         
         api.submit_order(
-            symbol='symbol',
+            symbol='sell',
             side='buy',
             type='market',
             qty='100',
@@ -84,10 +85,10 @@ for symbol in symbols:
             order_class='bracket',
             limit_price=limit_price,
             take_profit=dict(
-            limit_price=limit_price + opening_range,
+            limit_price=limit_price - opening_range,
             ),
             stop_loss=dict(
-            stop_price=limit_price - opening_range,
+            stop_price=limit_price + opening_range,
             )
         )
     else:

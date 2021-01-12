@@ -9,7 +9,15 @@ cursor.execute("""
 """)
 
 cursor.execute("""
-    DROP table stock
+    DROP TABLE stock
+""")
+
+cursor.execute("""
+    DROP TABLE stock_strategy
+""")
+
+cursor.execute("""
+    DROP TABLE strategy
 """)
 
 connection.commit()

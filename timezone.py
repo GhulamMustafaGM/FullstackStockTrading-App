@@ -10,3 +10,5 @@ def is_dst ():
 
     # if DST is in effect, their offsets will be different
     return not (y.utcoffset() == x.utcoffset())
+
+print(is_dst())
