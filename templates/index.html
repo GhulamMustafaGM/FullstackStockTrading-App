@@ -19,6 +19,10 @@
                 <option {% if request.query_params.filter == 'new_closing_highs' %}selected="selected"{% endif %} value="new_closing_lows">New Closing Lows</option>
                 <option {% if request.query_params.filter == 'RSI Overbought' %}selected="selected"{% endif %} value="rsi_bought">RSI Overbought</option>
                 <option {% if request.query_params.filter == 'RSI Oversold' %}selected="selected"{% endif %} value="rsi_oversold">RSI Oversold</option>
+                <option {% if request.query_params.filter == 'above_sma_20' %}selected="selected"{% endif %} value="above_sma_20">Above 20 SMA</option>
+                <option {% if request.query_params.filter == 'below_sma_20' %}selected="selected"{% endif %} value="below_sma_20">Below 20 SMA</option>
+                <option {% if request.query_params.filter == 'above_sma_50' %}selected="selected"{% endif %} value="above_sma_50">Above 50 SMA</option>
+                <option {% if request.query_params.filter == 'below_sma_50' %}selected="selected"{% endif %} value="below_sma_50">Above 50 SMA</option>
             </select>
             <input type="submit" />
         </form>

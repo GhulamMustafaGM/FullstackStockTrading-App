@@ -35,20 +35,36 @@ def index(request: Request):
 		) where date = (select max(date) from stock_price)
         """)
         
-    elif stock_filter == 'rsi_overbought':
+    elif stock_filter == 'above_sms_20':
         cursor.execute("""
             select symbol, name, stock_id, date
             from stock_price join stock on stock.id = stock_price.stock_id
-            where rsi_14 > 70
+            where close > sma_20
             AND date = (select max(date) from stock_price)
             order by symbol
         """)
         
-    elif stock_filter == 'rsi_oversold':
+    elif stock_filter == 'below_sma_20':
         cursor.execute("""
             select symbol, name, stock_id, date
             from stock_price join stock on stock.id = stock_price.stock_id
-            where rsi_14 < 30
+            where close > 20
+            AND date = (select max(date) from stock_price)
+            order by symbol
+        """)
+    elif stock_filter == 'above_sma_50':
+            cursor.execute("""
+            select symbol, name, stock_id, date
+            from stock_price join stock on stock.id = stock_price.stock_id
+            where close > 50
+            AND date = (select max(date) from stock_price)
+            order by symbol
+        """)
+    elif stock_filter == 'below_sma_50':
+            cursor.execute("""
+            select symbol, name, stock_id, date
+            from stock_price join stock on stock.id = stock_price.stock_id
+            where close < 50
             AND date = (select max(date) from stock_price)
             order by symbol
         """)
