@@ -131,6 +131,10 @@ def apply_strategy(strategy_id: int = Form(...), stock_id: int = Form(...)):
     connection.commit()
     
     return RedirectResponse(url=f"/strategy/{strategy_id}", status_code=303)
+@app.get("/strategieies")
+def strategies(request: Request)
+
+    return templates.TemplateResponse("strategies.html", {"request": request })
 
 @app.get("/strategy/{strategy_id}")
 def strategy(request: Request, strategy_id):
