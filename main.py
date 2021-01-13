@@ -1,4 +1,5 @@
 import sqlite3, config
+import alpaca_trade_api as tradeapi
 from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
@@ -131,10 +132,27 @@ def apply_strategy(strategy_id: int = Form(...), stock_id: int = Form(...)):
     connection.commit()
     
     return RedirectResponse(url=f"/strategy/{strategy_id}", status_code=303)
-@app.get("/strategieies")
-def strategies(request: Request)
 
-    return templates.TemplateResponse("strategies.html", {"request": request })
+@app.get("/strategieies")
+def strategies(request: Request):
+    connection = sqlite3.connect(config.DB_FILE)
+    connection.row_factory = slqite3.Row
+    cursor = connection.cursor()
+    
+    cursor.execute(""" 
+        SELECT * FROM strategy
+    """)
+    strategies = cursor.fetchall()
+    
+    return templates.TemplateResponse("strategies.html", {"request": request, "strategies": strategies })
+
+@app.get("/orders")
+def orders(request: Request):
+
+    api = tradeapi.REST(config.API_KEY, config.SECRET_KEY, base_url=config.API_URL)
+    orders = api.list_orders(status='all')
+    
+    return templates.TemplateResponse("orders.html", {"request": request, "orders": orders })
 
 @app.get("/strategy/{strategy_id}")
 def strategy(request: Request, strategy_id):
