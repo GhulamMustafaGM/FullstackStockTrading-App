@@ -34,6 +34,9 @@ def index(request: Request):
             order by symbol
 		) where date = (select max(date) from stock_price)
         """)
+        
+    elif stock_filter == 'rsi_overbought':
+    elif stock_filter == 'rsi_oversold:'
     else:        
         cursor.execute("""
             SELECT id, symbol, name FROM stock ORDER BY symbol

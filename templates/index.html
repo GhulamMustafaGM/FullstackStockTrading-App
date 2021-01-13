@@ -17,6 +17,8 @@
                 <option {% if request.query_params.filter == 'new_closing_highs' %}selected="selected"{% endif %} value="new_closing_highs">New Closing Highs</option>
                 <!-- <option value="new_intrady-lows">New Intraday Lows</option> -->
                 <option {% if request.query_params.filter == 'new_closing_highs' %}selected="selected"{% endif %} value="new_closing_lows">New Closing Lows</option>
+                <option {% if request.query_params.filter == 'RSI Overbought' %}selected="selected"{% endif %} value="rsi_bought">RSI Overbought</option>
+                <option {% if request.query_params.filter == 'RSI Oversold' %}selected="selected"{% endif %} value="rsi_oversold">RSI Oversold</option>
             </select>
             <input type="submit" />
         </form>
