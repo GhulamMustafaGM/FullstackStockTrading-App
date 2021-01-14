@@ -41,3 +41,7 @@ for symbol in symbols:
     print(symbol)
     minute_bars = api.polygon.historic_agg_v2(symbol, 1, 'minute', _from=current_date, to=current_date).df
     print(minute_bars)
+    
+    market_open_mask = (minute_bars.index >= start_minute_bar) & (minute_bars.index < end_minute_bar)
+    market_open_bars = minute_bars.loc[market_open_mask]    
+    print(market_open_bars)

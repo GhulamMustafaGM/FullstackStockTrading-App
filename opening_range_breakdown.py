@@ -46,23 +46,23 @@ messages = []
 for symbol in symbols:
     minute_bars = api.polygon.historic_agg_v2(symbol, 1, 'minute', _from=current_date, to=current_date).df
 
-    print(symbol)
+    # print(symbol)
     opening_range_mask = (minute_bars.index >= start_minute_bar) & (minute_bars.index < end_minute_bar)
     opening_range_bars = minute_bars.loc[opening_range_mask]
-    print(opening_range_bars)
+    # print(opening_range_bars)
     
     opening_range_low = opening_range_bars['low'].min()
     opening_range_high = opening_range_bars['high'].max()
     opening_range = opening_range_high - opening_range_low
     
-    print(opening_range_low)
-    print(opening_range_high)
-    print(opening_range)
+    # print(opening_range_low)
+    # print(opening_range_high)
+    # print(opening_range)
     
     after_opening_range_mask = minute_bars.index >= end_minute_bar
     after_opening_range_bars = minute_bars.loc[after_opening_range_mask]
     
-    print(after_opening_range_bars)
+    # print(after_opening_range_bars)
     
     after_opening_range_breakdown = after_opening_range_bars[after_opening_range_bars['close'] < opening_range_ligh]
     
