@@ -45,3 +45,9 @@ for symbol in symbols:
     market_open_mask = (minute_bars.index >= start_minute_bar) & (minute_bars.index < end_minute_bar)
     market_open_bars = minute_bars.loc[market_open_mask]    
     print(market_open_bars)
+    
+    if len(market_open_bars) >= 20:
+        closes = market_open_bars.close.values
+        print(closes)
+        
+        bands = tulipy.bbands()
