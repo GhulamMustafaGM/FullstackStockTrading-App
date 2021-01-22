@@ -3,6 +3,7 @@ import alpaca_trade_api as tradeapi
 import smtplib, ssl
 from datetime import date
 from timezone import is_dst
+from helpers import calculate_quantity
 
 context = ssl.create_default_context()
 
@@ -79,7 +80,8 @@ for symbol in symbols:
             symbol='symbol',
             side='buy',
             type='market',
-            qty='100',
+            # qty='100',
+            qty=calculate_quantity(limit_price),
             time_in_force='day',
             order_class='bracket',
             limit_price=limit_price,
