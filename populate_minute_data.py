@@ -10,17 +10,39 @@ connection.row_factory = sqlite3.Row
 cursor = connection.cursor()
 
 symbols = []
-stocks = {}
+stock_ids = {}
 
 with open('qqq.csv') as f:
     reader = csv.reader(f)
         for line in reader:
             symbols.append(line[1])
-print(symbols)
+# print(symbols)
+cursor.rexecute("""
+    SELECT * FROM stock
+""")
+stocks = cursor.fetchall()
 
-api = tradeapi.REST(config.API_KEY, config.SECRET_KEY, config.API_URL)
-minutes = api.polygon.historic_agg_v2('AAPL', 1, 'minute', _from='2021-01-01', to='2021-01-25').df
-minutes = minutes.resample('1min').ffill()
+for stock in stocks:
+    symbol = stock['symbol']
+    stock_ids[symbol] = stock['id']
+    
+# print(stock_ids)
+
+for symbol in symbols:
+    
+    start_date = datetime(2020, 10, 25).date()
+    end_date_range = datetime(2021, 1, 25).date()
+    
+    while start_date <end_date_range:
+        print(start-date)
+        print(end_date)
+        
+        start_date = start_date + timedelta(days=7)
+
+# api = tradeapi.REST(config.API_KEY, config.SECRET_KEY, config.API_URL)
+# minutes = api.polygon.historic_agg_v2('AAPL', 1, 'minute', _from='2021-01-01', to='2021-01-25').df
+# minutes = minutes.resample('1min').ffill()
+
 # print(minutes)
 
 for index, row in minutes.iterrows():
